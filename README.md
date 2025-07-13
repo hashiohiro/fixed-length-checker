@@ -1,44 +1,56 @@
-# FixedLengthChecker
+# 📄 FixedLengthChecker
 
-A versatile fixed-length file validation tool 🚀
+A versatile, developer-friendly tool for validating fixed-length data files 🚀
 
-This tool validates the consistency of each field in fixed-length files based on JSON definition files.  
-It can be used for file verification before/after output, pre-checks for batch processing, or as part of CI/CD
-pipelines.
+This tool checks each field in fixed-length files based on external JSON definition files.
+It is ideal for pre- and post-processing file checks, batch job validations, or as part of your CI/CD pipelines.
 
 ---
 
-## Features
+## ✨ Features
 
 - Flexible field validation using external definition files
-- Supports both byte length and character length modes (`--length-mode` option)
-- Strategy pattern-based rule extension for future enhancements
+- Supports both byte length and character length modes (--length-mode option)
+- Easy rule extension with strategy pattern
 - Usable as both a CLI tool and a Java library
-- JSON definition support (YAML planned for future)
+- JSON definition support (YAML support planned)
 
 ---
 
-## Usage (CLI)
+## 💻 Usage (CLI)
 
 ```shell
 java -jar FixedLengthChecker.jar <dataFile> <definitionJson> [--charset <charset>] [--length-mode <bytes|chars>]
 ```
 
-## CLI Options
+## ⚙️ CLI Options
+
 | Option             | Description                                                       | Default    |
-| ------------------ | ----------------------------------------------------------------- | ---------- |
+|--------------------|-------------------------------------------------------------------|------------|
 | `<dataFile>`       | Path to the fixed-length data file to be validated.               | (required) |
 | `<definitionJson>` | Path to the JSON definition file describing field rules.          | (required) |
 | `--charset`        | Character encoding to read the file (e.g., UTF-8, MS932).         | UTF-8      |
 | `--length-mode`    | Length mode: `bytes` for byte count, `chars` for character count. | bytes      |
 
-## Example
+## ✅ Example
 
 ```shell
 java -jar FixedLengthChecker.jar data/output.dat config/definitions.json --charset MS932 --length-mode bytes
 ```
 
-## Example Definition JSON
+### 💾 Sample Input File (input.dat)
+
+```text
+2123456789
+2ABCDEFGHIJ
+```
+
+#### Explanation:
+
+- Line 1: Valid — Data Section = 2, Inquiry Number = 123456789 (numeric)
+- Line 2: Invalid — Inquiry Number = ABCDEFGHIJ (non-numeric)
+
+### 🗂 Sample Definition JSON
 
 ```json
 [
@@ -61,21 +73,32 @@ java -jar FixedLengthChecker.jar data/output.dat config/definitions.json --chars
 ]
 ```
 
-## Example Output
+#### Definition Fields:
+
+| Field        | Description                                   |
+|--------------|-----------------------------------------------|
+| `name`       | Logical name shown in logs and errors         |
+| `length`     | Field length (byte or char depending on mode) |
+| `fixedValue` | Expected fixed value (optional)               |
+| `blank`      | If true, field must be blank                  |
+| `regex`      | Regex pattern to validate content (optional)  |
+| `required`   | Must be present and non-empty if true         |
+
+## 💬 Example Output
 
 ```
 ----- Line 1 -----
 ✅ Data Section Check OK [2]
-✅ Inquiry Number Check OK [0000000123]
------ Line 1 End -----
+✅ Inquiry Number Check OK [123456789]
+----- End of Line 1 -----
 
 ----- Line 2 -----
 ✅ Data Section Check OK [2]
 ❌ Inquiry Number Regex Mismatch [ABCDEFGHIJ]
------ Line 2 End -----
+----- End of Line 2 -----
 ```
 
-## Library Usage (Java)
+## ☕ Library Usage (Java)
 
 ```java
 import org.hashiohiro.fixedlengthchecker.core.service.FixedLengthChecker;
@@ -86,9 +109,8 @@ import java.util.List;
 
 public class SampleUsage {
     public static void main(String[] args) throws Exception {
-        // Create a checker instance
-        // The first parameter specifies the charset (e.g., MS932 or UTF-8)
-        // The second parameter specifies whether to use byte length (true) or character length (false)
+        // Create a FixedLengthChecker instance
+        // true = byte length mode, false = char length mode
         FixedLengthChecker checker = new FixedLengthChecker(Charset.forName("MS932"), true);
 
         // Load field definitions from a JSON file
@@ -110,19 +132,17 @@ public class SampleUsage {
 
 ```
 
-## License
+## ⚖️ License
 
-This project is licensed under the Apache License 2.0. 
+This project is licensed under the MIT License.
 
 See the LICENSE file for details.
 
-## Notice
+## 📄 Notice
 
-This product includes software developed by FasterXML (Jackson).
+For third-party software attributions, please refer to the NOTICE file.
 
-This product includes software developed by Project Lombok.
-
-## 🧩 Easter Egg
+## 🧩 A Small Message
 
 - Learn from the past,
 - Embrace the present,
