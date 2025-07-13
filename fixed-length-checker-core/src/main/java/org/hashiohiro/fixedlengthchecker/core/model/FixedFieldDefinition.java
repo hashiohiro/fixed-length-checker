@@ -1,16 +1,18 @@
 package org.hashiohiro.fixedlengthchecker.core.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
 /**
- * <pre>
  * Represents a single field definition used in fixed-length file validation.
+ * <pre>
  * This model defines field name, length, fixed value, regex, and blank or required flags.
  * </pre>
  */
 @Data
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class FixedFieldDefinition {
 
     /**

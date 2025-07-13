@@ -4,16 +4,16 @@ import org.hashiohiro.fixedlengthchecker.core.model.FixedFieldDefinition;
 import org.hashiohiro.fixedlengthchecker.core.model.ValidationResult;
 
 /**
- * <pre>
  * Validator that checks if a field value is blank when expected.
+ * <pre>
  * Used for fields marked with isBlank=true to ensure they contain only whitespace or are empty.
  * </pre>
  */
 public class BlankValidator implements FieldValidator {
 
     /**
-     * <pre>
      * Validates whether the value of a field is blank based on its definition.
+     * <pre>
      * Returns a ValidationResult indicating success or failure with a descriptive message.
      * </pre>
      * @param fieldName name of the field being validated

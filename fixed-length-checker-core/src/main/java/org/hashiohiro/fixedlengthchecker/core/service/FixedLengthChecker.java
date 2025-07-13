@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <pre>
  * Facade service for validating fixed-length files using predefined field definitions.
+ * <pre>
  * Provides methods to load definitions, validate files, and validate single lines.
  * </pre>
  */
@@ -41,8 +41,8 @@ public class FixedLengthChecker {
     private final FixedLengthValidator validator;
 
     /**
-     * <pre>
      * Constructs a new FixedLengthChecker with specified charset and length mode.
+     * <pre>
      * Initializes the validator and prepares for file or line validations.
      * </pre>
      * @param charset charset to use for file reading
@@ -55,8 +55,8 @@ public class FixedLengthChecker {
     }
 
     /**
-     * <pre>
      * Loads and validates field definitions from a JSON file.
+     * <pre>
      * Must be called before any validation; validates definitions immediately after loading.
      * </pre>
      * @param jsonPath path to the JSON definition file

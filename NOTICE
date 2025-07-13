@@ -1,0 +1,9 @@
+This product includes:
+
+- Jackson (FasterXML), licensed under the Apache License 2.0
+- Project Lombok, licensed under the MIT License
+- JUnit 5, licensed under the Eclipse Public License 1.0
+- SnakeYAML, licensed under the Apache License 2.0
+- System Lambda (by Stefan Birkner), licensed under the MIT License
+
+For more details, refer to each project's individual license.

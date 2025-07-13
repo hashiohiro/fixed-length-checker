@@ -3,8 +3,8 @@ package org.hashiohiro.fixedlengthchecker.core.model;
 import lombok.Data;
 
 /**
- * <pre>
  * Represents the validation result for a single field in a fixed-length record.
+ * <pre>
  * Holds field name, validity status, error message, and actual value for detailed reporting.
  * </pre>
  */
@@ -32,8 +32,9 @@ public class ValidationResult {
     private String actualValue;
 
     /**
-     * <pre>
      * Constructs a new ValidationResult with specified field information.
+     *
+     * <pre>
      * Initializes all properties to describe a single field's validation outcome.
      * </pre>
      * @param fieldName the name of the field

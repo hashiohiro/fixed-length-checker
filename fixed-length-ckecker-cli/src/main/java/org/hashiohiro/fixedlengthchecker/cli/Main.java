@@ -4,19 +4,20 @@ import org.hashiohiro.fixedlengthchecker.core.model.ValidationResult;
 import org.hashiohiro.fixedlengthchecker.core.service.FixedLengthChecker;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws Exception {
         if (args.length < 2) {
             System.err.println("Usage: java -jar FixedLengthChecker.jar <dataFile> <definitionJson> [--charset <charset>] [--length-mode <bytes|chars>]");
-            return;
+            System.exit(1);
         }
 
         String dataFile = args[0];
         String defFile = args[1];
 
-        Charset charset = Charset.forName("UTF-8");
+        Charset charset = StandardCharsets.UTF_8;
         boolean useByteLength = true; // Default: bytes
 
         // Parse optional arguments
@@ -31,7 +32,7 @@ public class Main {
                     useByteLength = true;
                 } else {
                     System.err.println("Invalid length-mode. Use 'bytes' or 'chars'.");
-                    return;
+                    System.exit(1);
                 }
             }
         }
@@ -49,5 +50,7 @@ public class Main {
             }
             System.out.println("----- End of Line " + (i + 1) + " -----\n");
         }
+
+        System.exit(0);
     }
 }

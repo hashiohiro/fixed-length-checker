@@ -78,17 +78,36 @@ java -jar FixedLengthChecker.jar data/output.dat config/definitions.json --chars
 ## Library Usage (Java)
 
 ```java
-FixedLengthChecker checker = new FixedLengthChecker(Charset.forName("MS932"), true);
-checker.loadDefinitions("config/definitions.json");
+import org.hashiohiro.fixedlengthchecker.core.service.FixedLengthChecker;
+import org.hashiohiro.fixedlengthchecker.core.result.ValidationResult;
 
-List<List<ValidationResult>> results = checker.validateFile("data/output.dat");
+import java.nio.charset.Charset;
+import java.util.List;
 
-for (int i = 0; i <results.size(); i++){
-    System.out.println("----- line at "+(i +1) +" -----");
-    for (ValidationResult res : results.get(i)) {
-        System.out.println(res.getMessage() +" ["+res.getActualValue() +"]");
+public class SampleUsage {
+    public static void main(String[] args) throws Exception {
+        // Create a checker instance
+        // The first parameter specifies the charset (e.g., MS932 or UTF-8)
+        // The second parameter specifies whether to use byte length (true) or character length (false)
+        FixedLengthChecker checker = new FixedLengthChecker(Charset.forName("MS932"), true);
+
+        // Load field definitions from a JSON file
+        checker.loadDefinitions("config/definitions.json");
+
+        // Validate all lines in the data file
+        List<List<ValidationResult>> results = checker.validateFile("data/output.dat");
+
+        // Print validation results line by line
+        for (int i = 0; i < results.size(); i++) {
+            System.out.println("----- Line " + (i + 1) + " -----");
+            for (ValidationResult res : results.get(i)) {
+                System.out.println(res.getMessage() + " [" + res.getActualValue() + "]");
+            }
+            System.out.println("----- End of Line " + (i + 1) + " -----\n");
+        }
     }
 }
+
 ```
 
 ## License

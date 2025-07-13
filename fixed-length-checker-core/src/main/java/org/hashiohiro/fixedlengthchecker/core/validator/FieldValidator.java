@@ -4,16 +4,16 @@ import org.hashiohiro.fixedlengthchecker.core.model.FixedFieldDefinition;
 import org.hashiohiro.fixedlengthchecker.core.model.ValidationResult;
 
 /**
- * <pre>
  * Interface for field validators used in fixed-length file validation.
+ * <pre>
  * Implementations perform checks such as blank, fixed value, or regex validation for each field.
  * </pre>
  */
 public interface FieldValidator {
 
     /**
-     * <pre>
      * Validates a single field value based on its definition.
+     * <pre>
      * Returns a ValidationResult describing whether the field passes or fails the specific check.
      * </pre>
      * @param fieldName name of the field being validated

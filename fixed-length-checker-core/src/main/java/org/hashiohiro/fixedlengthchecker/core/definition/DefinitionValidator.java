@@ -6,17 +6,16 @@ import java.util.List;
 import java.util.regex.PatternSyntaxException;
 
 /**
- * <pre>
  * Provides validation logic for field definitions to ensure correctness before use.
+ * <pre>
  * This class checks each field's properties, such as name, length, regex, and blank settings.
  * </pre>
  */
 public class DefinitionValidator {
 
     /**
-     * <pre>
      * Validates each field definition to ensure the configuration is correct.
-     *
+     * <pre>
      * Throws an IllegalArgumentException if any field definition is invalid,
      * such as missing name, invalid length, or incorrect regex.
      * </pre>
