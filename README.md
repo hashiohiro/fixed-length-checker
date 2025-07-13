@@ -1,56 +1,65 @@
 # 📄 FixedLengthChecker
 
-A versatile, developer-friendly tool for validating fixed-length data files 🚀
-
-This tool checks each field in fixed-length files based on external JSON definition files.
-It is ideal for pre- and post-processing file checks, batch job validations, or as part of your CI/CD pipelines.
+A versatile and developer-friendly tool for validating fixed-length files 🚀  
+Ideal for batch jobs, pre/post file checks, and seamless CI/CD integrations — all in one lightweight utility.
 
 ---
 
 ## ✨ Features
 
 - Flexible field validation using external definition files
-- Supports both byte length and character length modes (--length-mode option)
-- Easy rule extension with strategy pattern
-- Usable as both a CLI tool and a Java library
-- JSON definition support (YAML support planned)
+- Easy integration into CI/CD pipelines
+- Supports both byte length and character length modes (via the `--length-mode` option)
+- Works as both a CLI tool and a Java library
+- Easily extendable through a strategy-based validation design
+- Supports JSON definitions (YAML also supported)
 
 ---
 
 ## 💻 Usage (CLI)
 
-```shell
-java -jar FixedLengthChecker.jar <dataFile> <definitionJson> [--charset <charset>] [--length-mode <bytes|chars>]
-```
-
-## ⚙️ CLI Options
-
-| Option             | Description                                                       | Default    |
-|--------------------|-------------------------------------------------------------------|------------|
-| `<dataFile>`       | Path to the fixed-length data file to be validated.               | (required) |
-| `<definitionJson>` | Path to the JSON definition file describing field rules.          | (required) |
-| `--charset`        | Character encoding to read the file (e.g., UTF-8, MS932).         | UTF-8      |
-| `--length-mode`    | Length mode: `bytes` for byte count, `chars` for character count. | bytes      |
-
-## ✅ Example
+You can flexibly combine options to suit a variety of scenarios, from simple checks to advanced validations.
 
 ```shell
-java -jar FixedLengthChecker.jar data/output.dat config/definitions.json --charset MS932 --length-mode bytes
+java -jar FixedLengthChecker.jar <dataFile> <definitionFile> [--charset <charset>] [--length-mode <bytes|chars>]
 ```
 
-### 💾 Sample Input File (input.dat)
+### ⚙️ CLI Options
 
-```text
+| Option             | Description                                                  | Default    |
+|--------------------|--------------------------------------------------------------|------------|
+| `<dataFile>`       | Path to the fixed-length data file to be validated           | (required) |
+| `<definitionFile>` | Path to the JSON or YAML file defining field rules           | (required) |
+| `--charset`        | Character encoding for reading the file (e.g., UTF-8, MS932) | UTF-8      |
+| `--length-mode`    | Use `bytes` for byte count or `chars` for character count    | bytes      |
+
+---
+
+### ✅ Example
+
+```shell
+java -jar FixedLengthChecker.jar data/input.dat config/definitions.json --charset MS932 --length-mode bytes
+```
+
+---
+
+## 💾 Sample Input File (`input.dat`)
+
+```
 2123456789
 2ABCDEFGHIJ
 ```
 
-#### Explanation:
+#### Explanation
 
-- Line 1: Valid — Data Section = 2, Inquiry Number = 123456789 (numeric)
-- Line 2: Invalid — Inquiry Number = ABCDEFGHIJ (non-numeric)
+> This example uses MS932 encoding.
 
-### 🗂 Sample Definition JSON
+> - **Line 1:** Valid — Data Section = `2`, Inquiry Number = `123456789` (numeric)
+> - **Line 2:** Invalid — Inquiry Number = `ABCDEFGHIJ` (non-numeric)
+
+---
+
+## 🗂 Sample Definition (JSON)
 
 ```json
 [
@@ -73,7 +82,7 @@ java -jar FixedLengthChecker.jar data/output.dat config/definitions.json --chars
 ]
 ```
 
-#### Definition Fields:
+#### Definition Fields
 
 | Field        | Description                                   |
 |--------------|-----------------------------------------------|
@@ -84,7 +93,34 @@ java -jar FixedLengthChecker.jar data/output.dat config/definitions.json --chars
 | `regex`      | Regex pattern to validate content (optional)  |
 | `required`   | Must be present and non-empty if true         |
 
+---
+
+#### YAML Definition
+
+In addition to JSON, you can also define field rules in YAML format.  
+YAML allows adding inline comments, making it more readable and easier to maintain with your team.
+
+```yaml
+- name: "Data Section"      # Logical name shown in logs and errors
+  length: 1                 # Field length (byte or char depending on mode)
+  fixedValue: "2"           # Expected fixed value (optional)
+  blank: false              # If true, field must be blank
+  regex: null               # Regex pattern to validate content (optional)
+  required: true            # Must be present and non-empty if true
+
+- name: "Inquiry Number"
+  length: 10
+  fixedValue: null
+  blank: false
+  regex: "\\d+"             # Must be numeric
+  required: true
+```
+
+---
+
 ## 💬 Example Output
+
+The output clearly indicates success or failure for each field, making it easy to locate and fix data issues.
 
 ```
 ----- Line 1 -----
@@ -98,7 +134,11 @@ java -jar FixedLengthChecker.jar data/output.dat config/definitions.json --chars
 ----- End of Line 2 -----
 ```
 
+---
+
 ## ☕ Library Usage (Java)
+
+The following example shows how to integrate validation into your Java application, with potential points for customization and error handling.
 
 ```java
 import org.hashiohiro.fixedlengthchecker.core.service.FixedLengthChecker;
@@ -110,14 +150,14 @@ import java.util.List;
 public class SampleUsage {
     public static void main(String[] args) throws Exception {
         // Create a FixedLengthChecker instance
-        // true = byte length mode, false = char length mode
+        // true = byte length mode, false = character length mode
         FixedLengthChecker checker = new FixedLengthChecker(Charset.forName("MS932"), true);
 
         // Load field definitions from a JSON file
         checker.loadDefinitions("config/definitions.json");
 
         // Validate all lines in the data file
-        List<List<ValidationResult>> results = checker.validateFile("data/output.dat");
+        List<List<ValidationResult>> results = checker.validateFile("data/input.dat");
 
         // Print validation results line by line
         for (int i = 0; i < results.size(); i++) {
@@ -129,18 +169,22 @@ public class SampleUsage {
         }
     }
 }
-
 ```
+
+---
 
 ## ⚖️ License
 
-This project is licensed under the MIT License.
-
+This project is licensed under the MIT License.  
 See the LICENSE file for details.
+
+---
 
 ## 📄 Notice
 
-For third-party software attributions, please refer to the NOTICE file.
+For third-party software attributions, please refer to the [NOTICE](NOTICE) file.
+
+---
 
 ## 🧩 A Small Message
 
