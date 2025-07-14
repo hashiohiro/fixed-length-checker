@@ -46,7 +46,7 @@ public class Main {
         for (int i = 0; i < results.size(); i++) {
             System.out.println("----- Line " + (i + 1) + " -----");
             for (ValidationResult res : results.get(i)) {
-                System.out.println(res.getMessage() + " [" + res.getActualValue() + "]");
+                System.out.println(res.getMessage() + " [" + res.getActualValue() + "] " + "(" + res.getFieldName() + ")");
             }
             System.out.println("----- End of Line " + (i + 1) + " -----\n");
         }
